@@ -7,17 +7,44 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="buttons-go-here">
+    </div>
+    <form id="animal-form">
+        <label for="animal-input">Add n animal!</label>
+        <input type="text" id="animal-input"><br>
+
+        <input id="add-animal" type="submit" value="Add an animal!">
+    </form>
+    
+    <div id="giiffy-goes-here">
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="giphy.js" type= "text/javascript"></script>
     <script type="text/javascript">
         var queryURL = "https://api.giphy.com/v1/gifs/trending?api_key=dc6zaTOxFJmzC";
+        $("button").on("click", function() {
+            var animal = $(this).attr("data-animal");
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+            animal + "&api_key=dc6zaTOxFJmzC&limit=10";
 
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function(response) {
-            console.log(response);
-        });
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function(response) {
+                console.log(response);
+                for (var i = 0; i , results.length; i++) {
+                    if (results[i]rating !== "r" && results[i].rating !== "pg-13") {
+                        var giffDiv = $("<div>");
+                        var rating = results[i].rating;
+                        var p = $("<p>").text("Rating: " + rating);
+                        var animalImage = $("<img>");
+                        animalImage.attr("src", results[i].images.fixed_height.url);
+                        giffDiv.append(p);
+                        giffDiv.append(animalImage);
+                        $("#giiffy-goes-here").prepend(giffDiv);
+                    }
+                }
+            });
     </script>
     
 
